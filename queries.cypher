@@ -238,3 +238,96 @@ MERGE (f:Film {naslov: 'Inception'})
 ON MATCH SET f.opis = 'Klasik Christophera Nolana'
 ON CREATE SET f.godina = 2010, f.ocjena = 8.8
 RETURN f
+
+//Završni zadatak
+
+CREATE (:Zanr {naziv: 'EDM'});
+CREATE (:Zanr {naziv: 'Pop'});
+CREATE (:Zanr {naziv: 'House'});
+CREATE (:Zanr {naziv: 'Trance'});
+CREATE (:Zanr {naziv: 'Future Bass'});
+
+CREATE (:Izvodac {ime: 'Avicii', drzava: 'Svedska', godina_osnivanja: 2006});
+CREATE (:Izvodac {ime: 'Martin Garrix', drzava: 'Nizozemska', godina_osnivanja: 2012});
+CREATE (:Izvodac {ime: 'Calvin Harris', drzava: 'Velika Britanija', godina_osnivanja: 2002});
+CREATE (:Izvodac {ime: 'Kygo', drzava: 'Norveska', godina_osnivanja: 2012});
+CREATE (:Izvodac {ime: 'Marshmello', drzava: 'SAD', godina_osnivanja: 2015});
+CREATE (:Izvodac {ime: 'Zedd', drzava: 'Njemacka', godina_osnivanja: 2010});
+
+CREATE (:Album {naziv: 'True', godina: 2013, ocjena: 8.9});
+CREATE (:Album {naziv: 'Stories', godina: 2015, ocjena: 8.7});
+CREATE (:Album {naziv: 'TIM', godina: 2019, ocjena: 8.5});
+CREATE (:Album {naziv: 'Funk Wav Bounces Vol. 1', godina: 2017, ocjena: 8.4});
+CREATE (:Album {naziv: 'Funk Wav Bounces Vol. 2', godina: 2022, ocjena: 8.1});
+CREATE (:Album {naziv: 'Motion', godina: 2014, ocjena: 8.3});
+CREATE (:Album {naziv: 'Stardust', godina: 2017, ocjena: 8.6});
+CREATE (:Album {naziv: 'Golden Hour', godina: 2019, ocjena: 8.2});
+CREATE (:Album {naziv: 'Shockwave', godina: 2023, ocjena: 7.9});
+CREATE (:Album {naziv: 'Clarity', godina: 2012, ocjena: 8.4});
+CREATE (:Album {naziv: 'True Colors', godina: 2016, ocjena: 8.0});
+CREATE (:Album {naziv: 'ZEDD Mix Rush', godina: 2013, ocjena: 7.8});
+
+MATCH (i:Izvodac {ime: 'Avicii'}), (a:Album {naziv: 'True'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Avicii'}), (a:Album {naziv: 'Stories'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Avicii'}), (a:Album {naziv: 'TIM'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Calvin Harris'}), (a:Album {naziv: 'Funk Wav Bounces Vol. 1'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Calvin Harris'}), (a:Album {naziv: 'Funk Wav Bounces Vol. 2'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Calvin Harris'}), (a:Album {naziv: 'Motion'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Kygo'}), (a:Album {naziv: 'Stardust'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Kygo'}), (a:Album {naziv: 'Golden Hour'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Marshmello'}), (a:Album {naziv: 'Shockwave'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Zedd'}), (a:Album {naziv: 'Clarity'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Zedd'}), (a:Album {naziv: 'True Colors'}) CREATE (i)-[:OBJAVIO]->(a);
+MATCH (i:Izvodac {ime: 'Zedd'}), (a:Album {naziv: 'ZEDD Mix Rush'}) CREATE (i)-[:OBJAVIO]->(a);
+
+MATCH (a:Album {naziv: 'True'}), (z:Zanr {naziv: 'EDM'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Stories'}), (z:Zanr {naziv: 'EDM'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'TIM'}), (z:Zanr {naziv: 'EDM'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Funk Wav Bounces Vol. 1'}), (z:Zanr {naziv: 'Pop'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Funk Wav Bounces Vol. 2'}), (z:Zanr {naziv: 'Pop'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Motion'}), (z:Zanr {naziv: 'House'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Stardust'}), (z:Zanr {naziv: 'Future Bass'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Golden Hour'}), (z:Zanr {naziv: 'Future Bass'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Shockwave'}), (z:Zanr {naziv: 'House'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'Clarity'}), (z:Zanr {naziv: 'Trance'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'True Colors'}), (z:Zanr {naziv: 'Trance'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+MATCH (a:Album {naziv: 'ZEDD Mix Rush'}), (z:Zanr {naziv: 'EDM'}) CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Izvodac {ime: 'Avicii'}), (b:Izvodac {ime: 'Kygo'}) CREATE (a)-[:SLICAN]->(b);
+MATCH (a:Izvodac {ime: 'Martin Garrix'}), (b:Izvodac {ime: 'Zedd'}) CREATE (a)-[:SLICAN]->(b);
+MATCH (a:Izvodac {ime: 'Marshmello'}), (b:Izvodac {ime: 'Martin Garrix'}) CREATE (a)-[:SLICAN]->(b);
+MATCH (a:Izvodac {ime: 'Calvin Harris'}), (b:Izvodac {ime: 'Avicii'}) CREATE (a)-[:SLICAN]->(b);
+MATCH (a:Izvodac {ime: 'Zedd'}), (b:Izvodac {ime: 'Marshmello'}) CREATE (a)-[:SLICAN]->(b);
+
+MATCH (a:Izvodac {ime: 'Avicii'}), (b:Izvodac {ime: 'Martin Garrix'}) CREATE (a)-[:SURADIVAO_S]->(b);
+MATCH (a:Izvodac {ime: 'Calvin Harris'}), (b:Izvodac {ime: 'Kygo'}) CREATE (a)-[:SURADIVAO_S]->(b);
+
+CREATE CONSTRAINT izvodac_ime_unique FOR (i:Izvodac) REQUIRE i.ime IS UNIQUE;
+CREATE INDEX album_ocjena FOR (a:Album) ON (a.ocjena);
+
+
+
+MATCH (i:Izvodac {ime: 'Avicii'})-[:OBJAVIO]->(a:Album)
+RETURN a.naziv AS album, a.godina AS godina, a.ocjena AS ocjena
+ORDER BY a.godina ASC;
+
+MATCH (i:Izvodac)-[:OBJAVIO]->(a:Album)
+WHERE a.ocjena > 8.0
+RETURN i.ime AS izvodac, a.naziv AS album, a.ocjena AS ocjena
+ORDER BY a.ocjena DESC;
+
+MATCH (i:Izvodac)
+OPTIONAL MATCH (i)-[:OBJAVIO]->(a:Album)
+RETURN i.ime AS izvodac, count(a) AS broj_albuma
+ORDER BY broj_albuma DESC;
+
+MATCH p = shortestPath(
+  (a:Izvodac {ime: 'Marshmello'}) -[:SLICAN|SURADIVAO_S*..10]- (b:Izvodac {ime: 'Avicii'})
+)
+RETURN p, length(p) AS duljina_puta;
+
+MATCH (a:Album)-[:PRIPADA_ZANRU]->(z:Zanr)
+WITH z.naziv AS zanr, count(a) AS broj_albuma, avg(a.ocjena) AS prosjecna_ocjena
+WHERE prosjecna_ocjena > 7.5
+RETURN zanr, broj_albuma, round(prosjecna_ocjena * 10) / 10 AS prosjecna_ocjena
+ORDER BY prosjecna_ocjena DESC;
