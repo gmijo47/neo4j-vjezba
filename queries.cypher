@@ -168,3 +168,49 @@ MATCH (a:Osoba {ime: 'Francis Ford Coppola'}), (b:Osoba {ime: 'Leonardo DiCaprio
 RETURN EXISTS { MATCH (a)-[*1..4]-(b) } AS povezani_u_4_koraka;
 
 
+//Zadatak 6
+
+MATCH (f:Film)
+RETURN f.zanr AS zanr, count(f) AS broj_filmova
+ORDER BY broj_filmova DESC;
+
+MATCH (f:Film)
+WITH f.zanr AS zanr, count(f) AS broj, avg(f.ocjena) AS prosjecna_ocjena
+WHERE broj > 1
+RETURN zanr, broj, round(prosjecna_ocjena * 10) / 10 AS ocjena
+ORDER BY prosjecna_ocjena DESC;
+
+MATCH (o:Osoba)-[:REZIRAO]->(f:Film)
+WITH o.ime AS redatelj, count(f) AS filmova, collect(f.naslov) AS naslovi
+RETURN redatelj, filmova, naslovi
+ORDER BY filmova DESC;
+
+MATCH (f:Film)
+WITH f.zanr AS zanr, f
+ORDER BY f.ocjena DESC
+WITH zanr, collect(f)[0..3] AS top_filmovi
+RETURN zanr,
+       [film IN top_filmovi | film.naslov + ' (' + toString(film.ocjena) + ')']
+       AS top3;
+
+MATCH (f:Film)
+RETURN count(f) AS ukupno_filmova, round(avg(f.ocjena) * 10) / 10 AS prosjecna_ocjena;
+
+MATCH (f:Film)
+WITH f.zanr AS zanr, count(f) AS broj_filmova, max(f.ocjena) AS max_ocjena
+RETURN zanr, broj_filmova, max_ocjena
+ORDER BY max_ocjena DESC;
+
+
+MATCH (o:Osoba)-[:ZIVI_U]->(g:Grad)
+WITH g, count(o) AS broj_osoba
+ORDER BY broj_osoba DESC
+LIMIT 1
+MATCH (o:Osoba)-[:ZIVI_U]->(g)
+RETURN o.ime AS osoba, g.naziv AS grad;
+
+
+MATCH (o:Osoba)-[:GLUMIO_U]->(f:Film)
+WITH f.naslov AS film, collect(o.ime) AS glumci
+RETURN film, glumci
+ORDER BY film;
