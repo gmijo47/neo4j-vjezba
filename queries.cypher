@@ -130,3 +130,41 @@ WHERE broj_filmova > 1
 RETURN redatelj, broj_filmova, naslovi
 ORDER BY broj_filmova DESC;
 
+//Zadatak 5
+
+MATCH (f:Film {naslov: 'Inception'})-[*1..2]-(n)
+RETURN DISTINCT labels(n) AS tip, n.naslov AS naslov, n.ime AS ime
+
+MATCH p = shortestPath(
+  (a:Osoba {ime: 'Christopher Nolan'})
+  -[*]-
+  (b:Osoba {ime: 'Bong Joon-ho'})
+)
+RETURN p, length(p) AS duljina_puta;
+
+MATCH p = shortestPath(
+  (a:Osoba {ime: 'Christopher Nolan'})
+  -[*]-
+  (b:Osoba {ime: 'Bong Joon-ho'})
+)
+RETURN p, length(p) AS duljina_puta
+
+MATCH p = (a:Osoba {ime: 'Leonardo DiCaprio'})
+          -[*1..4]-
+          (b:Osoba {ime: 'Bong Joon-ho'})
+RETURN p, length(p) AS duljina
+ORDER BY duljina
+LIMIT 5;
+
+MATCH p = shortestPath(
+  (a:Osoba {ime: 'Leonardo DiCaprio'}) -[*]- (b:Osoba {ime: 'Bong Joon-ho'})
+)
+RETURN p, length(p) AS duljina_puta;
+
+MATCH (g:Grad {naziv: 'London'})-[*1..2]-(n)
+RETURN DISTINCT labels(n) AS tip, n.naziv AS naziv, n.ime AS ime, n.naslov AS naslov;
+
+MATCH (a:Osoba {ime: 'Francis Ford Coppola'}), (b:Osoba {ime: 'Leonardo DiCaprio'})
+RETURN EXISTS { MATCH (a)-[*1..4]-(b) } AS povezani_u_4_koraka;
+
+

@@ -24,3 +24,9 @@ MATCH `je ekvivalent SQL `INNER JOIN` operatora — vraća **samo one redove** z
 `OPTIONAL MATCH` je ekvivalent SQL `LEFT JOIN` operatora — vraća **sve čvorove** iz prethodnog dijela upita, a za one koji nemaju odgovarajući pattern vraća `null`ž
 
 ---
+
+## Zadatak 5
+
+Ako `shortestPath` ne pronađe nikakav put između dva zadana čvora (npr. čvorovi nisu međusobno povezani u grafu), funkcija vraća `null` Da bismo eksplicitno uhvatili slučaj "nema puta", trebali bismo koristiti `OPTIONAL MATCH` u kombinaciji s `shortestPath`.
+
+---
