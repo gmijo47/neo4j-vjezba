@@ -214,3 +214,27 @@ MATCH (o:Osoba)-[:GLUMIO_U]->(f:Film)
 WITH f.naslov AS film, collect(o.ime) AS glumci
 RETURN film, glumci
 ORDER BY film;
+
+//Zadatak 7
+
+CREATE INDEX film_ocjena FOR (f:Film) ON (f.ocjena);
+CREATE INDEX film_naslov FOR (f:Film) ON (f.naslov);
+CREATE INDEX osoba_ime FOR (o:Osoba) ON (o.ime);
+
+CREATE CONSTRAINT film_naslov_unique
+FOR (f:Film) REQUIRE f.naslov IS UNIQUE;
+
+CREATE CONSTRAINT film_naslov_nn
+FOR (f:Film) REQUIRE f.naslov IS NOT NULL;
+
+SHOW INDEXES;
+SHOW CONSTRAINTS;
+
+// Ovo ce baciti gresku jer Inception vec postoji (UNIQUE constraint)
+CREATE (f:Film {naslov: 'Inception', godina: 2025, ocjena: 5.0})
+
+// MERGE ce pronaci postojeci film umjesto kreiranja duplikata:
+MERGE (f:Film {naslov: 'Inception'})
+ON MATCH SET f.opis = 'Klasik Christophera Nolana'
+ON CREATE SET f.godina = 2010, f.ocjena = 8.8
+RETURN f
