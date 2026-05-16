@@ -36,3 +36,46 @@ CREATE (o7:Osoba {ime: 'Miro Mirić', dob: 80});
 
 CREATE (g4:Grad {naziv: 'Mostar'});
 
+//Zadatak 3
+
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'Inception'})
+CREATE (o)-[:REZIRAO]->(f);
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'The Dark Knight'})
+CREATE (o)-[:REZIRAO]->(f);
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'Interstellar'})
+CREATE (o)-[:REZIRAO]->(f);
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'Memento'})
+CREATE (o)-[:REZIRAO]->(f);
+MATCH (o:Osoba {ime: 'Bong Joon-ho'}), (f:Film {naslov: 'Parasite'})
+CREATE (o)-[:REZIRAO]->(f);
+MATCH (o:Osoba {ime: 'Francis Ford Coppola'}), (f:Film {naslov: 'The Godfather'})
+CREATE (o)-[:REZIRAO]->(f);
+
+MATCH (o:Osoba {ime: 'Leonardo DiCaprio'}), (f:Film {naslov: 'Inception'})
+CREATE (o)-[:GLUMIO_U]->(f);
+MATCH (o:Osoba {ime: 'Christian Bale'}), (f:Film {naslov: 'The Dark Knight'})
+CREATE (o)-[:GLUMIO_U]->(f);
+MATCH (o:Osoba {ime: 'Christian Bale'}), (f:Film {naslov: 'The Dark Knight'})
+MERGE (o)-[:GLUMIO_U]->(f);   // MERGE - ne kreira duplikat ako vec postoji
+
+
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (g:Grad {naziv: 'London'})
+CREATE (o)-[:ZIVI_U]->(g);
+MATCH (o:Osoba {ime: 'Leonardo DiCaprio'}), (g:Grad {naziv: 'Los Angeles'})
+CREATE (o)-[:ZIVI_U]->(g);
+MATCH (o:Osoba {ime: 'Bong Joon-ho'}), (g:Grad {naziv: 'Seoul'})
+CREATE (o)-[:ZIVI_U]->(g);
+
+MATCH (a:Osoba {ime: 'Christopher Nolan'}), (b:Osoba {ime: 'Christian Bale'})
+CREATE (a)-[:PRIJATELJ {od: 2000}]->(b);
+MATCH (a:Osoba {ime: 'Leonardo DiCaprio'}), (b:Osoba {ime: 'Christopher Nolan'})
+CREATE (a)-[:PRIJATELJ {od: 2010}]->(b);
+
+MATCH (n)-[r]->(m) RETURN n, r, m
+
+MATCH (o:Osoba {ime: 'Petar Perić'}), (f:Film {naslov: 'The Godfather'})
+CREATE (o)-[:GLUMIO_U]->(f);
+MATCH (o:Osoba {ime: 'Miro Mirić'}), (f:Film {naslov: 'Memento'})
+CREATE (o)-[:GLUMIO_U]->(f);
+
+MATCH ()-[r]->() RETURN type(r) AS tip, count(*) AS broj ORDER BY broj DESC;
