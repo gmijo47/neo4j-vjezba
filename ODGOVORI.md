@@ -16,3 +16,11 @@ Neo4j eksponira dva porta:
 
 
 ---
+
+## Zadatak 4
+
+MATCH `je ekvivalent SQL `INNER JOIN` operatora — vraća **samo one redove** za koje postoji odgovarajući pattern u grafu. 
+
+`OPTIONAL MATCH` je ekvivalent SQL `LEFT JOIN` operatora — vraća **sve čvorove** iz prethodnog dijela upita, a za one koji nemaju odgovarajući pattern vraća `null`ž
+
+---
